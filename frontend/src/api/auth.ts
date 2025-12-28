@@ -1,0 +1,23 @@
+import axiosInstance from './axios';
+import type { LoginRequest, RegisterRequest, AuthResponse, UserResponse } from '../types';
+
+export const authApi = {
+    register: async (data: RegisterRequest): Promise<AuthResponse> => {
+        const response = await axiosInstance.post<AuthResponse>('/auth/register', data);
+        return response.data;
+    },
+
+    login: async (data: LoginRequest): Promise<AuthResponse> => {
+        const response = await axiosInstance.post<AuthResponse>('/auth/login', data);
+        return response.data;
+    },
+
+    getCurrentUser: async (): Promise<UserResponse> => {
+        const response = await axiosInstance.get<UserResponse>('/auth/me');
+        return response.data;
+    },
+
+    logout: async (): Promise<void> => {
+        await axiosInstance.post('/auth/logout');
+    },
+};
